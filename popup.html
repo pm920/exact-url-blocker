@@ -1,0 +1,68 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Exact URL Blocker</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { width: 340px; }
+  .pad { padding: 10px 12px; }
+  .current { border-bottom: 1px solid var(--line); }
+  #list-wrap { max-height: 260px; overflow-y: auto; }
+  footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; border-top: 1px solid var(--line); background: var(--bg-soft);
+    font-size: 12px; color: var(--fg-dim);
+  }
+  .hint { font-size: 11px; color: var(--fg-dim); margin-top: 6px; }
+  .warn {
+    padding: 8px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    font-size: 11.5px;
+  }
+  .warn[hidden] { display: none; }
+  .setup-banner {
+    display: block; width: 100%;
+    border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+    padding: 9px 12px; text-align: left;
+    background: var(--accent-soft); color: var(--accent); font-size: 12.5px;
+  }
+  .setup-banner[hidden] { display: none; }
+</style>
+
+<header>
+  <span class="dot" id="status-dot"></span>
+  <h1 class="grow">Exact URL Blocker</h1>
+</header>
+
+<button class="setup-banner" id="setup-banner" hidden>Setup isn't finished yet. Open setup →</button>
+<div class="warn" id="warn" hidden></div>
+
+<section class="pad current">
+  <div class="row">
+    <div class="grow truncate">
+      <div class="label truncate" id="current-host">—</div>
+      <div class="hint" id="current-note"></div>
+    </div>
+    <button class="primary" id="block-current">Block</button>
+  </div>
+</section>
+
+<section class="pad">
+  <form class="row" id="add-form">
+    <input type="text" id="add-input" class="grow" placeholder="example.com or example.com/path" spellcheck="false" autocomplete="off">
+    <button type="submit">Add</button>
+  </form>
+  <div class="hint" id="add-hint">Permanent once added. Exact host only.</div>
+</section>
+
+<div id="list-wrap">
+  <ul class="list" id="list"></ul>
+</div>
+
+<footer>
+  <span id="count">0 rules</span>
+  <a href="#" id="open-options">Settings</a>
+</footer>
+
+<script type="module" src="src/popup.js"></script>

@@ -1,0 +1,58 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Blocked</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  html, body { height: 100%; }
+  body { background: var(--bg-sunk); display: grid; place-items: center; }
+  .panel {
+    width: min(520px, calc(100vw - 32px));
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+  }
+  .mark {
+    width: 44px; height: 44px; margin: 0 auto 16px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid; place-items: center;
+    font-size: 22px; font-weight: 700; line-height: 1;
+  }
+  .panel h1 { font-size: 17px; margin-bottom: 6px; }
+  .url {
+    margin: 14px 0 4px;
+    padding: 9px 12px;
+    background: var(--bg-soft);
+    border-radius: var(--radius);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    word-break: break-all;
+    text-align: left;
+  }
+  .rule { font-size: 12px; color: var(--fg-dim); margin-bottom: 20px; }
+  .buttons { display: flex; gap: 8px; justify-content: center; }
+
+  /* Blocked iframes get the compact version. */
+  body.embedded { background: var(--bg-soft); }
+  body.embedded .panel { border: 0; border-radius: 0; padding: 14px; background: transparent; }
+  body.embedded .mark { width: 26px; height: 26px; font-size: 14px; margin-bottom: 8px; }
+  body.embedded h1 { font-size: 13px; }
+  body.embedded .url, body.embedded .buttons { display: none; }
+</style>
+
+<div class="panel">
+  <div class="mark">✕</div>
+  <h1>Blocked</h1>
+  <div class="dim" id="sub">This page is on your block list.</div>
+  <div class="url" id="url"></div>
+  <div class="rule" id="rule"></div>
+  <div class="buttons">
+    <button class="primary" id="back">Go back</button>
+    <button id="close">Close tab</button>
+  </div>
+</div>
+
+<script type="module" src="src/blocked.js"></script>

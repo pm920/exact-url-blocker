@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Exact URL Blocker — Settings</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { background: var(--bg-sunk); }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .card > .pad { padding: 14px 16px; }
+  .card > .pad + .pad { border-top: 1px solid var(--line); }
+  .title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .title h1 { font-size: 18px; }
+  .hint { font-size: 12px; color: var(--fg-dim); margin-top: 8px; }
+  .list li { padding-left: 16px; padding-right: 16px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .preview { font-size: 11px; color: var(--fg-dim); }
+  code { background: var(--bg-soft); padding: 1px 4px; border-radius: 4px; font-size: 11.5px; }
+</style>
+
+<main>
+  <div class="title">
+    <span class="dot" id="status-dot"></span>
+    <h1 class="grow">Exact URL Blocker</h1>
+  </div>
+
+  <div class="card">
+    <div class="pad">
+      <h2>Add entries</h2>
+      <div class="hint">One per line, permanent once added. A path makes the rule narrower:
+        <code>reddit.com</code> blocks the whole host, <code>reddit.com/r/all</code> blocks only that section.</div>
+      <textarea id="bulk" spellcheck="false" placeholder="news.ycombinator.com&#10;x.com&#10;reddit.com/r/all"></textarea>
+      <div class="row" style="margin-top:8px">
+        <button class="primary" id="bulk-add">Add to list</button>
+        <span class="hint grow" id="bulk-msg" style="margin:0"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="pad row">
+      <h2 class="grow" id="list-title">Blocked</h2>
+    </div>
+    <ul class="list" id="list"></ul>
+  </div>
+
+  <div class="card">
+    <div class="pad">
+      <h2>Backup</h2>
+      <div class="actions" style="margin-top:10px">
+        <button id="export">Export JSON</button>
+        <button id="import">Import JSON</button>
+        <input type="file" id="file" accept="application/json" hidden>
+      </div>
+      <div class="hint" id="io-msg"></div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="src/options.js"></script>

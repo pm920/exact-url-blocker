@@ -1,0 +1,157 @@
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f4f4f5;
+  --bg-sunk: #ebebed;
+  --fg: #18181b;
+  --fg-dim: #71717a;
+  --line: #e0e0e3;
+  --accent: #c62b30;
+  --accent-soft: #fdecec;
+  --ok: #17803d;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181b;
+    --bg-soft: #232327;
+    --bg-sunk: #101012;
+    --fg: #f4f4f5;
+    --fg-dim: #a1a1aa;
+    --line: #34343a;
+    --accent: #f0575c;
+    --accent-soft: #2c1a1b;
+    --ok: #4ac97e;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 { margin: 0; font-weight: 600; }
+h1 { font-size: 14px; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-dim); }
+
+a { color: inherit; }
+
+.row { display: flex; align-items: center; gap: 8px; }
+.grow { flex: 1; min-width: 0; }
+.dim { color: var(--fg-dim); }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+.dot.off { background: var(--fg-dim); }
+
+input[type="text"] {
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+}
+input[type="text"]:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  resize: vertical;
+}
+
+button {
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  color: var(--fg);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover:not(:disabled) { background: var(--bg-sunk); }
+button:disabled { opacity: .45; cursor: default; }
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+button.primary:hover:not(:disabled) { filter: brightness(1.08); }
+
+button.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--fg-dim);
+  padding: 4px 6px;
+}
+button.ghost:hover:not(:disabled) { background: var(--bg-sunk); color: var(--fg); }
+
+/* Switch */
+.switch { position: relative; display: inline-block; width: 34px; height: 20px; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch span {
+  position: absolute; inset: 0;
+  background: var(--bg-sunk);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: background .12s;
+}
+.switch span::after {
+  content: "";
+  position: absolute; top: 2px; left: 2px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  transition: transform .12s;
+}
+.switch input:checked + span { background: var(--accent); border-color: var(--accent); }
+.switch input:checked + span::after { transform: translateX(14px); }
+.switch.small { width: 28px; height: 16px; }
+.switch.small span::after { width: 10px; height: 10px; }
+.switch.small input:checked + span::after { transform: translateX(12px); }
+
+/* Entry list */
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.list li:last-child { border-bottom: 0; }
+.list li.off .label { color: var(--fg-dim); text-decoration: line-through; }
+.label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.label.group { font-family: inherit; font-size: 13px; font-weight: 500; }
+.empty { padding: 18px 12px; text-align: center; color: var(--fg-dim); }
+.lock { width: 28px; flex: none; text-align: center; font-size: 11px; opacity: .55; }

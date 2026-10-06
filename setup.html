@@ -1,0 +1,122 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set up Exact URL Blocker</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { background: var(--bg-sunk); }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px 72px; }
+  .title { display: flex; align-items: center; gap: 10px; }
+  .title h1 { font-size: 20px; }
+  .lead { font-size: 14px; color: var(--fg-dim); margin: 8px 0 22px; max-width: 54ch; }
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .card > .pad { padding: 16px 18px; }
+  .card > .pad + .pad, .card > .list + .pad { border-top: 1px solid var(--line); }
+  .card h2 { margin-bottom: 4px; }
+  .hint { font-size: 12px; color: var(--fg-dim); margin-top: 6px; }
+  .hint.error { color: var(--accent); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chips[hidden] { display: none; }
+  .chip { border-radius: 999px; padding: 5px 12px; font-size: 12.5px; }
+
+  #custom-form { margin-top: 12px; }
+
+  .list li { padding: 10px 18px; gap: 12px; }
+  .name { font-weight: 600; font-size: 13px; }
+  .covers { font-size: 11.5px; color: var(--fg-dim); margin-top: 1px; }
+
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; flex: none; }
+  .seg button { border: 0; border-radius: 0; background: var(--bg); padding: 5px 10px; font-size: 12px; color: var(--fg-dim); }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on, .seg button.on:hover { background: var(--fg); color: var(--bg); }
+
+
+  .window { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .window span { color: var(--fg-dim); font-size: 12px; }
+  input[type="time"] {
+    padding: 6px 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--fg);
+    font: inherit;
+  }
+  input[type="time"]:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  #add-window { margin-top: 10px; padding-left: 0; }
+  .muted { opacity: .45; pointer-events: none; }
+
+  .confirm { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; margin: 10px 0 14px; cursor: pointer; }
+  .confirm input { margin-top: 2px; accent-color: var(--accent); }
+  #lock { width: 100%; padding: 11px 14px; font-size: 14px; }
+
+  .done-head { display: flex; align-items: center; gap: 10px; }
+  .done-head .mark {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent); font-weight: 700;
+  }
+  .done-head h2 { font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--fg); margin: 0; }
+</style>
+
+<main>
+  <div class="title">
+    <span class="dot"></span>
+    <h1 class="grow">Set up Exact URL Blocker</h1>
+  </div>
+  <p class="lead">Pick what to block and when. Once you lock it there is no off switch, not in the popup and not in the settings. You can add sites later, never take them off.</p>
+
+  <div id="steps">
+    <section class="card">
+      <div class="pad">
+        <h2>1 · What to block</h2>
+        <div class="hint">Pick the ones you want. Each covers the site's other addresses too, like m.youtube.com.</div>
+        <div class="chips" id="presets"></div>
+        <form class="row" id="custom-form">
+          <input type="text" id="custom-input" class="grow" placeholder="Another site, e.g. news.ycombinator.com" spellcheck="false" autocomplete="off">
+          <button type="submit">Add</button>
+        </form>
+        <div class="hint" id="custom-hint"></div>
+      </div>
+      <ul class="list" id="picked"></ul>
+    </section>
+
+    <section class="card" id="when">
+      <div class="pad">
+        <h2>2 · When the time-window sites open</h2>
+        <div class="hint" id="when-hint">Outside these windows they are blocked. A window can run past midnight, like 20:00 to 06:00.</div>
+        <div id="windows"></div>
+        <button class="ghost" id="add-window" type="button">+ Add a window</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="pad">
+        <h2>3 · Lock it</h2>
+        <label class="confirm">
+          <input type="checkbox" id="understand">
+          <span>I understand that after this, nothing here can be switched off or removed in the extension.</span>
+        </label>
+        <button class="primary" id="lock" disabled>Lock and start blocking</button>
+        <div class="hint" id="lock-hint"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" id="done" hidden>
+    <div class="pad">
+      <div class="done-head"><span class="mark">✓</span><h2 id="done-title">Locked. Blocking is on.</h2></div>
+      <div class="hint" id="done-since"></div>
+    </div>
+    <ul class="list" id="done-list"></ul>
+    <div class="pad hint">You can close this tab. To block more later, use the toolbar icon.</div>
+  </section>
+</main>
+
+<script type="module" src="src/setup.js"></script>
