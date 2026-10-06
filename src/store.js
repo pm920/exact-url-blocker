@@ -5,10 +5,13 @@ import { enforce } from "./policy.js";
 // Portability between machines is covered by export/import on the options page.
 const AREA = "local";
 
+// Every key the extension stores must be listed here: get() with an object only
+// returns the keys it names, so a missing one is written but never read back.
 export const DEFAULTS = {
   enabled: true,
   wwwEquivalent: true,
-  entries: []
+  entries: [],
+  setup: null
 };
 
 /** Always the enforced view, see policy.js: nothing on the list can be switched off. */
